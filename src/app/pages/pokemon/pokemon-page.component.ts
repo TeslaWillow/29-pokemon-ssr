@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PokemonListComponent } from '../../pokemons/components/pokemon-list/pokemon-list.component';
+
 
 @Component({
   selector: 'app-pokemon-page',
@@ -7,6 +8,16 @@ import { PokemonListComponent } from '../../pokemons/components/pokemon-list/pok
   templateUrl: './pokemon-page.component.html',
   styles: ``
 })
-export default class PokemonPageComponent {
+export default class PokemonPageComponent implements OnInit {
+
+  // public isLoading = signal<boolean>(true);
+
+  constructor(){}
+
+  ngOnInit(): void {
+    // setTimeout(() => {
+    //   this.isLoading.set(false);
+    // }, 1000);
+  }
 
 }
