@@ -12,6 +12,11 @@ export default class PokemonPageComponent implements OnInit {
 
   // public isLoading = signal<boolean>(true);
 
+  // private appRef = inject(ApplicationRef);
+  // private $appState = this.appRef.isStable.subscribe( isStable => {
+  //   console.log({ isStable });
+  // });
+
   constructor(){}
 
   ngOnInit(): void {
@@ -19,5 +24,9 @@ export default class PokemonPageComponent implements OnInit {
     //   this.isLoading.set(false);
     // }, 1000);
   }
+
+  // ngOnDestroy(): void {
+  //   this.$appState.unsubscribe();
+  // }
 
 }
