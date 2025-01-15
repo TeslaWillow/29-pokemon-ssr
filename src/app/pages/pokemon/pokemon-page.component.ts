@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { PokemonListComponent } from '../../pokemons/components/pokemon-list/pokemon-list.component';
+import { PokemonsService } from '../../pokemons/services/pokemons.service';
 
 
 @Component({
@@ -17,12 +18,22 @@ export default class PokemonPageComponent implements OnInit {
   //   console.log({ isStable });
   // });
 
+  private _pokemon = inject(PokemonsService);
+
   constructor(){}
 
   ngOnInit(): void {
     // setTimeout(() => {
     //   this.isLoading.set(false);
     // }, 1000);
+    this.loadPokemons();
+  }
+
+  public loadPokemons( page = 0 ): void {
+    this._pokemon.loadPage(page).subscribe({
+      next: (p) => { console.log(p); },
+      error: (e) => { console.error(e); }
+    });
   }
 
   // ngOnDestroy(): void {
