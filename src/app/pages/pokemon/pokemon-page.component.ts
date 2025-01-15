@@ -1,6 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { PokemonListComponent } from '../../pokemons/components/pokemon-list/pokemon-list.component';
 import { PokemonsService } from '../../pokemons/services/pokemons.service';
+import { SimplePokemon } from '../../pokemons/interfaces';
 
 
 @Component({
@@ -19,6 +20,7 @@ export default class PokemonPageComponent implements OnInit {
   // });
 
   private _pokemon = inject(PokemonsService);
+  public pokemons  = signal<SimplePokemon[]>([]);
 
   constructor(){}
 
@@ -31,7 +33,7 @@ export default class PokemonPageComponent implements OnInit {
 
   public loadPokemons( page = 0 ): void {
     this._pokemon.loadPage(page).subscribe({
-      next: (p) => { console.log(p); },
+      next: (pokemons) => { this.pokemons.set(pokemons); },
       error: (e) => { console.error(e); }
     });
   }
