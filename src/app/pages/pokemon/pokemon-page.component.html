@@ -5,21 +5,20 @@
 
 <hr class="my-2">
 
-
-<pokemon-list
-  [pokemons]="pokemons()"
-/>
-
 <!--
 // The server already respond with data then the first load wont be necesary to
 // show loader
-@if ( !isLoading() ) {
-  <pokemon-list />
+-->
+
+@if ( pokemons().length !== 0 ) {
+  <pokemon-list
+    [pokemons]="pokemons()"
+  />
 } @else {
   <pokemon-list-skeleton />
 }
 
--->
+
 
 <div class="flex justify-between">
   <button (click)="loadPokemons(-1)" class="mt-2">
