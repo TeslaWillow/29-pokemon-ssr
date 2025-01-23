@@ -1,8 +1,8 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { PokemonListComponent } from '../../pokemons/components/pokemon-list/pokemon-list.component';
 import { PokemonsService } from '../../pokemons/services/pokemons.service';
 import { SimplePokemon } from '../../pokemons/interfaces';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map, tap } from 'rxjs';
@@ -12,11 +12,11 @@ import { PokemonListSkeletonComponent } from './ui/pokemon-list-skeleton/pokemon
 
 @Component({
   selector: 'app-pokemon-page',
-  imports: [ PokemonListComponent, PokemonListSkeletonComponent ],
+  imports: [ PokemonListComponent, PokemonListSkeletonComponent, RouterLink ],
   templateUrl: './pokemon-page.component.html',
   styles: ``
 })
-export default class PokemonPageComponent implements OnInit {
+export default class PokemonPageComponent  {
 
   // public isLoading = signal<boolean>(true);
 
@@ -26,14 +26,18 @@ export default class PokemonPageComponent implements OnInit {
   // });
 
   private _pokemon = inject(PokemonsService);
-  private _router = inject(Router);
+  // private _router = inject(Router);
   private _title = inject(Title);
   public pokemons  = signal<SimplePokemon[]>([]);
 
+  public loadOnPageChanged = effect(() => {
+    this.loadPokemons( this.currentPage() );
+  });
+
   private _route = inject(ActivatedRoute);
   public currentPage = toSignal<number>(
-    this._route.queryParamMap.pipe(
-      map( params => params.get('page') ?? '1' ),
+    this._route.params.pipe(
+      map( params => params['page'] ?? '1' ),
       map( page => ( isNaN(+page) ? 1 : +page )),
       map( page => ( Math.max(1, page) )),
     )
@@ -41,14 +45,14 @@ export default class PokemonPageComponent implements OnInit {
 
   constructor(){}
 
-  ngOnInit(): void {
+  // ngOnInit(): void {
     // setTimeout(() => {
     //   this.isLoading.set(false);
     // }, 1000);
 
-    console.log( this.currentPage() );
-    this.loadPokemons();
-  }
+  //   console.log( this.currentPage() );
+  //   this.loadPokemons();
+  // }
 
   public loadPokemons( page = 0 ): void {
 
@@ -56,7 +60,7 @@ export default class PokemonPageComponent implements OnInit {
 
     this._pokemon.loadPage(pageToLoad)
       .pipe(
-        tap(() => this._router.navigate([], {queryParams: { page: pageToLoad }}) ),
+        // tap(() => this._router.navigate([], {queryParams: { page: pageToLoad }}) ),
         tap(() => this._title.setTitle(`Pokemon SSR - Page ${this.currentPage()}`))
       )
       .subscribe({
