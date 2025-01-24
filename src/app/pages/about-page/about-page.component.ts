@@ -5,7 +5,7 @@ import { Meta, Title } from '@angular/platform-browser';
   imports: [],
   templateUrl: './about-page.component.html',
 })
-export default class PricingPageComponent implements OnInit {
+export default class AboutPageComponent implements OnInit {
 
   private title = inject(Title);
   private meta = inject(Meta);
