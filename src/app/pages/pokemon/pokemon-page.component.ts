@@ -56,9 +56,9 @@ export default class PokemonPageComponent  {
 
   public loadPokemons( page = 0 ): void {
 
-    const pageToLoad = this.currentPage()! + page;
+    // const pageToLoad = this.currentPage()! + page;
 
-    this._pokemon.loadPage(pageToLoad)
+    this._pokemon.loadPage(page)
       .pipe(
         // tap(() => this._router.navigate([], {queryParams: { page: pageToLoad }}) ),
         tap(() => this._title.setTitle(`Pokemon SSR - Page ${this.currentPage()}`))
