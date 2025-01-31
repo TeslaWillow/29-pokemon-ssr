@@ -6,15 +6,12 @@
     <pokemon-card
       [pokemon]="pokemon"
     />
+   } @empty {
+    <!-- EMPTY STATE -->
+    <div
+      class="col-span-5 text-center border-white h-28 flex justify-center items-center"
+    >
+      No hay pokemons
+    </div>
    }
-
-
-  <!-- EMPTY STATE -->
-  <!--
-  <div
-    class="col-span-5 text-center border-white h-28 flex justify-center items-center"
-  >
-    No hay pokemons
-  </div>
-  -->
 </div>
